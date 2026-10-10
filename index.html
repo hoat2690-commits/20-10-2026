@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gửi Mẹ Yêu - 20/10/2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Gửi Mẹ Yêu - 20/10/2026 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -13,223 +14,234 @@
     }
 
     body {
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle, #fff5f5 0%, #fed7aa 100%);
-      font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden;
-      padding: 20px;
+      background: radial-gradient(circle at center, #ffe4e6 0%, #fecdd3 50%, #fda4af 100%);
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      perspective: 1200px;
     }
 
-    /* Hiệu ứng trái tim bay background */
-    .bg-hearts {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .heart-particle {
+    /* Hiệu ứng bong bóng / hoa rơi ngẫu nhiên */
+    .particle {
       position: absolute;
-      color: #f43f5e;
-      animation: floatUp 5s linear infinite;
-      opacity: 0.7;
+      pointer-events: none;
+      animation: floatUp 6s linear infinite;
+      z-index: 1;
     }
 
     @keyframes floatUp {
       0% {
-        transform: translateY(100vh) scale(0.3);
-        opacity: 0;
-      }
-      50% {
+        transform: translateY(100vh) rotate(0deg) scale(0.6);
         opacity: 0.8;
       }
       100% {
-        transform: translateY(-10vh) scale(1);
+        transform: translateY(-15vh) rotate(360deg) scale(1.2);
         opacity: 0;
       }
     }
 
-    /* Thẻ thiệp chúc mừng */
-    .card-container {
+    /* Khung chứa Thiệp 3D */
+    .card-wrapper {
       position: relative;
+      width: 340px;
+      height: 480px;
       z-index: 10;
-      background: #ffffff;
-      max-width: 480px;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-wrapper.open {
+      transform: rotateY(-160deg);
+    }
+
+    .card-front, .card-inside {
+      position: absolute;
       width: 100%;
+      height: 100%;
       border-radius: 24px;
-      padding: 35px 25px;
-      box-shadow: 0 20px 40px rgba(225, 29, 72, 0.15);
-      border: 2px solid #fecdd3;
-      text-align: center;
-    }
-
-    .year-badge {
-      font-family: 'Dancing Script', cursive;
-      font-size: 38px;
-      color: #be123c;
-      margin-bottom: 5px;
-    }
-
-    .main-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: #881337;
-      margin-bottom: 25px;
-      line-height: 1.4;
-    }
-
-    .wish-box {
+      box-shadow: 0 20px 50px rgba(225, 29, 72, 0.25);
+      border: 3px solid #fff;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 25px;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      text-align: center;
+      backface-visibility: hidden;
     }
 
-    .wish-item {
-      background: #fff1f2;
-      border-left: 4px solid #f43f5e;
-      padding: 12px 16px;
-      border-radius: 12px;
+    /* Mặt trước của thiệp */
+    .card-front {
+      background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
+      z-index: 2;
+      transform-origin: left;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-front .flower-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 8px 25px rgba(244, 63, 94, 0.4);
+      margin-bottom: 20px;
+      animation: pulse 2s infinite ease-in-out;
+      border: 4px solid #fecdd3;
+    }
+
+    .card-front h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 36px;
+      color: #e11d48;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .card-front p {
+      font-size: 14px;
+      color: #9f1239;
+      font-weight: 700;
+    }
+
+    .click-hint {
+      margin-top: 20px;
+      font-size: 12px;
+      background: #ffe4e6;
+      color: #e11d48;
+      padding: 8px 16px;
+      border-radius: 20px;
+      animation: bounce 1.5s infinite;
+    }
+
+    /* Mặt trong của thiệp */
+    .card-inside {
+      background: #ffffff;
+      transform: rotateY(180deg);
+      border: 3px solid #fecdd3;
+      justify-content: space-between;
+    }
+
+    .date-badge {
+      background: linear-gradient(135deg, #fb7185, #e11d48);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .message-body {
       font-size: 14px;
       color: #4c0519;
-      line-height: 1.6;
+      line-height: 1.7;
       text-align: left;
-    }
-
-    .love-mom {
-      font-family: 'Dancing Script', cursive;
-      font-size: 28px;
-      color: #e11d48;
       margin: 15px 0;
     }
 
-    /* Nút tương tác */
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
+    .message-body b {
+      color: #e11d48;
     }
 
-    .btn {
-      background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%);
+    .btn-action {
+      background: linear-gradient(135deg, #f43f5e, #be123c);
       color: white;
       border: none;
       padding: 12px 24px;
       border-radius: 50px;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.3);
       transition: all 0.3s ease;
-      width: 85%;
+      width: 100%;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
+    .btn-action:hover {
+      transform: scale(1.05);
     }
 
-    .btn-secondary {
-      background: #fff;
-      color: #e11d48;
-      border: 2px solid #f43f5e;
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
     }
 
-    /* Khung hiện điều ước bất ngờ */
-    #extraWish {
-      display: none;
-      margin-top: 15px;
-      padding: 15px;
-      background: #fef2f2;
-      border-radius: 12px;
-      color: #9f1239;
-      font-size: 14px;
-      line-height: 1.5;
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-hearts" id="heartContainer"></div>
+  <!-- Hiệu ứng hạt tim bay -->
+  <div id="particles"></div>
 
-  <div class="card-container">
-    <div class="year-badge">20-10-2026</div>
-    <h1 class="main-title">Chúc Mừng Ngày Phụ Nữ Việt Nam</h1>
-
-    <div class="wish-box">
-      <div class="wish-item">
-        🌸 <b>Gửi đến MẸ - người phụ nữ tuyệt vời nhất đời con!</b>
-      </div>
-      <div class="wish-item">
-        ❤️ Cầu chúc cho MẸ luôn tràn đầy sức khỏe, bình an và mãi giữ nụ cười ấm áp trên môi.
-      </div>
-      <div class="wish-item">
-        🌷 Chúc cho mỗi ngày trôi qua của Mẹ đều tràn ngập niềm vui, sự thư thái và hạnh phúc trọn vẹn.
-      </div>
-      <div class="wish-item">
-        ✨ Cảm ơn Mẹ vì tất cả những yêu thương và hy sinh thầm lặng dành cho con!
-      </div>
+  <!-- Thiệp 3D -->
+  <div class="card-wrapper" onclick="toggleCard()">
+    <!-- Mặt Ngoài -->
+    <div class="card-front">
+      <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80" alt="Hoa hồng 3D" class="flower-img">
+      <h2>Gửi Mẹ Yêu Thương!</h2>
+      <p>20 / 10 / 2026</p>
+      <div class="click-hint">✨ Chạm nhẹ để mở thiệp ✨</div>
     </div>
 
-    <div class="love-mom">Yêu MẸ rất nhiều! ❤️</div>
+    <!-- Mặt Trong -->
+    <div class="card-inside">
+      <div class="date-badge">20 OCTOBER 2026</div>
+      
+      <div class="message-body">
+        🌸 <b>Mẹ kính yêu!</b><br><br>
+        Nhân ngày Phụ nữ Việt Nam 20/10, con chúc Mẹ luôn tràn đầy sức khỏe, bình an và mãi nở nụ cười rạng rỡ trên môi.<br><br>
+        Cảm ơn Mẹ vì tất cả những hy sinh và tình yêu thương vô bờ bến dành cho con! 💕
+      </div>
 
-    <div class="button-group">
-      <button class="btn" onclick="sendKisses()">Gửi ngàn nụ hôn 💋</button>
-      <button class="btn btn-secondary" onclick="showExtraWish()">Xem thêm điều ước ✨</button>
-    </div>
-
-    <div id="extraWish">
-      💖 <b>Lời hứa của con:</b> Con hứa sẽ luôn chăm chỉ, sống tốt và trưởng thành thật tốt để Mẹ không phải bận lòng. Chúc Mẹ của con luôn trẻ đẹp và sống lâu thật lâu bên con cháu! 💐
+      <button class="btn-action" onclick="surprise(event)">Bấm để nhận quà Mẹ nhé! 🎁</button>
     </div>
   </div>
 
   <script>
-    // Hiệu ứng thả trái tim bay ngẫu nhiên
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-particle');
-      heart.innerHTML = ['❤️', '🌸', '💖', '🌹'][Math.floor(Math.random() * 4)];
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-      heart.style.fontSize = Math.random() * 15 + 15 + 'px';
-
-      document.getElementById('heartContainer').appendChild(heart);
-
-      setTimeout(() => { heart.remove(); }, 5000);
-    }
-    setInterval(createHeart, 300);
-
-    // Bật mở điều ước bất ngờ
-    function showExtraWish() {
-      const wish = document.getElementById('extraWish');
-      if (wish.style.display === 'block') {
-        wish.style.display = 'none';
-      } else {
-        wish.style.display = 'block';
-      }
+    // Mở / Đóng thiệp 3D
+    function toggleCard() {
+      const card = document.querySelector('.card-wrapper');
+      card.classList.toggle('open');
     }
 
-    // Hiệu ứng bắn tim khi bấm nút
-    function sendKisses() {
-      for (let i = 0; i < 15; i++) {
-        setTimeout(createHeart, i * 50);
-      }
-      alert('Con đã gửi ngàn nụ hôn và tình yêu to lớn nhất đến Mẹ! 💋❤️');
+    // Hiệu ứng pháo hoa bắn tungシュー
+    function surprise(e) {
+      e.stopPropagation(); // Không đóng thiệp khi bấm nút
+      
+      // Bắn pháo hoa tim lấp lấp
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#f43f5e', '#fb7185', '#ffe4e6', '#e11d48']
+      });
+
+      alert("❤️ Con chúc Mẹ ngày 20/10 thật nhiều niềm vui và luôn là người phụ nữ hạnh phúc nhất thế giới!");
     }
+
+    // Tạo các hạt hoa & tim bay background
+    function createParticle() {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.innerHTML = ['🌸', '🌹', '💖', '✨', '💐'][Math.floor(Math.random() * 5)];
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.fontSize = Math.random() * 15 + 15 + 'px';
+      p.style.animationDuration = Math.random() * 3 + 4 + 's';
+
+      document.getElementById('particles').appendChild(p);
+
+      setTimeout(() => p.remove(), 6000);
+    }
+
+    setInterval(createParticle, 300);
   </script>
-
 </body>
 </html>
