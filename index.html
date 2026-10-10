@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gửi Mẹ Yêu - 20/10/2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #fff5f5 0%, #fed7aa 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    /* Hiệu ứng trái tim bay background */
+    .bg-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart-particle {
+      position: absolute;
+      color: #f43f5e;
+      animation: floatUp 5s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Thẻ thiệp chúc mừng */
+    .card-container {
+      position: relative;
+      z-index: 10;
+      background: #ffffff;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 35px 25px;
+      box-shadow: 0 20px 40px rgba(225, 29, 72, 0.15);
+      border: 2px solid #fecdd3;
+      text-align: center;
+    }
+
+    .year-badge {
+      font-family: 'Dancing Script', cursive;
+      font-size: 38px;
+      color: #be123c;
+      margin-bottom: 5px;
+    }
+
+    .main-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #881337;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    .wish-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .wish-item {
+      background: #fff1f2;
+      border-left: 4px solid #f43f5e;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      color: #4c0519;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .love-mom {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      color: #e11d48;
+      margin: 15px 0;
+    }
+
+    /* Nút tương tác */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+      transition: all 0.3s ease;
+      width: 85%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: #e11d48;
+      border: 2px solid #f43f5e;
+    }
+
+    /* Khung hiện điều ước bất ngờ */
+    #extraWish {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background: #fef2f2;
+      border-radius: 12px;
+      color: #9f1239;
+      font-size: 14px;
+      line-height: 1.5;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-hearts" id="heartContainer"></div>
+
+  <div class="card-container">
+    <div class="year-badge">20-10-2026</div>
+    <h1 class="main-title">Chúc Mừng Ngày Phụ Nữ Việt Nam</h1>
+
+    <div class="wish-box">
+      <div class="wish-item">
+        🌸 <b>Gửi đến MẸ - người phụ nữ tuyệt vời nhất đời con!</b>
+      </div>
+      <div class="wish-item">
+        ❤️ Cầu chúc cho MẸ luôn tràn đầy sức khỏe, bình an và mãi giữ nụ cười ấm áp trên môi.
+      </div>
+      <div class="wish-item">
+        🌷 Chúc cho mỗi ngày trôi qua của Mẹ đều tràn ngập niềm vui, sự thư thái và hạnh phúc trọn vẹn.
+      </div>
+      <div class="wish-item">
+        ✨ Cảm ơn Mẹ vì tất cả những yêu thương và hy sinh thầm lặng dành cho con!
+      </div>
+    </div>
+
+    <div class="love-mom">Yêu MẸ rất nhiều! ❤️</div>
+
+    <div class="button-group">
+      <button class="btn" onclick="sendKisses()">Gửi ngàn nụ hôn 💋</button>
+      <button class="btn btn-secondary" onclick="showExtraWish()">Xem thêm điều ước ✨</button>
+    </div>
+
+    <div id="extraWish">
+      💖 <b>Lời hứa của con:</b> Con hứa sẽ luôn chăm chỉ, sống tốt và trưởng thành thật tốt để Mẹ không phải bận lòng. Chúc Mẹ của con luôn trẻ đẹp và sống lâu thật lâu bên con cháu! 💐
+    </div>
+  </div>
+
+  <script>
+    // Hiệu ứng thả trái tim bay ngẫu nhiên
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-particle');
+      heart.innerHTML = ['❤️', '🌸', '💖', '🌹'][Math.floor(Math.random() * 4)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+      heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+
+      document.getElementById('heartContainer').appendChild(heart);
+
+      setTimeout(() => { heart.remove(); }, 5000);
+    }
+    setInterval(createHeart, 300);
+
+    // Bật mở điều ước bất ngờ
+    function showExtraWish() {
+      const wish = document.getElementById('extraWish');
+      if (wish.style.display === 'block') {
+        wish.style.display = 'none';
+      } else {
+        wish.style.display = 'block';
+      }
+    }
+
+    // Hiệu ứng bắn tim khi bấm nút
+    function sendKisses() {
+      for (let i = 0; i < 15; i++) {
+        setTimeout(createHeart, i * 50);
+      }
+      alert('Con đã gửi ngàn nụ hôn và tình yêu to lớn nhất đến Mẹ! 💋❤️');
+    }
+  </script>
+
+</body>
+</html>
