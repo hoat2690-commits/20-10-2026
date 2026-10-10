@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gửi Mẹ Yêu - 20/10/2026 💖</title>
+  <title>Tri Ân Mẹ Và Cô - 20/10/2026 💖</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
@@ -14,17 +14,18 @@
     }
 
     body {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at center, #ffe4e6 0%, #fecdd3 50%, #fda4af 100%);
+      background: radial-gradient(circle at center, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
       font-family: 'Quicksand', sans-serif;
       overflow: hidden;
-      perspective: 1200px;
+      perspective: 1500px;
+      padding: 20px;
     }
 
-    /* Hiệu ứng bong bóng / hoa rơi ngẫu nhiên */
+    /* Hiệu ứng hạt tim & hoa rơi ngẫu nhiên */
     .particle {
       position: absolute;
       pointer-events: none;
@@ -43,197 +44,186 @@
       }
     }
 
-    /* Khung chứa Thiệp 3D */
-    .card-wrapper {
+    /* Khung chứa Thiệp 3D gập đôi */
+    .card-container {
       position: relative;
-      width: 340px;
+      width: 720px;
+      max-width: 95vw;
       height: 480px;
       z-index: 10;
-      cursor: pointer;
-      transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(180, 83, 9, 0.35);
+      background: #fdfbf7;
+      border: 4px solid #fef3c7;
     }
 
-    .card-wrapper.open {
-      transform: rotateY(-160deg);
-    }
-
-    .card-front, .card-inside {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(225, 29, 72, 0.25);
-      border: 3px solid #fff;
+    /* Trang trái thiệp 3D */
+    .card-page-left {
+      flex: 1;
+      border-right: 2px dashed #fde68a;
+      padding: 25px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      padding: 25px;
+      justify-content: center;
       text-align: center;
-      backface-visibility: hidden;
+      background: linear-gradient(135deg, #fffdfa 0%, #fff7ed 100%);
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
     }
 
-    /* Mặt trước của thiệp */
-    .card-front {
-      background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
-      z-index: 2;
-      transform-origin: left;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .card-front .flower-img {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 8px 25px rgba(244, 63, 94, 0.4);
-      margin-bottom: 20px;
-      animation: pulse 2s infinite ease-in-out;
-      border: 4px solid #fecdd3;
-    }
-
-    .card-front h2 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 36px;
-      color: #e11d48;
-      margin-bottom: 10px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
-    }
-
-    .card-front p {
-      font-size: 14px;
-      color: #9f1239;
-      font-weight: 700;
-    }
-
-    .click-hint {
-      margin-top: 20px;
-      font-size: 12px;
-      background: #ffe4e6;
-      color: #e11d48;
-      padding: 8px 16px;
-      border-radius: 20px;
-      animation: bounce 1.5s infinite;
-    }
-
-    /* Mặt trong của thiệp */
-    .card-inside {
-      background: #ffffff;
-      transform: rotateY(180deg);
-      border: 3px solid #fecdd3;
+    /* Trang phải thiệp 3D */
+    .card-page-right {
+      flex: 1;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: space-between;
+      text-align: center;
+      background: linear-gradient(135deg, #fff7ed 0%, #fffdfa 100%);
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
     }
 
-    .date-badge {
-      background: linear-gradient(135deg, #fb7185, #e11d48);
-      color: white;
-      padding: 6px 18px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1px;
+    .img-frame {
+      width: 100%;
+      height: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(217, 119, 6, 0.2);
+      border: 3px solid #fff;
+      margin-bottom: 15px;
+      transition: transform 0.4s ease;
     }
 
-    .message-body {
-      font-size: 14px;
-      color: #4c0519;
-      line-height: 1.7;
-      text-align: left;
-      margin: 15px 0;
+    .img-frame:hover {
+      transform: scale(1.03);
     }
 
-    .message-body b {
-      color: #e11d48;
+    .img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .btn-action {
-      background: linear-gradient(135deg, #f43f5e, #be123c);
+    .card-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      color: #b45309;
+      margin-bottom: 10px;
+    }
+
+    .card-wishes {
+      font-family: 'Dancing Script', cursive;
+      font-size: 20px;
+      color: #78350f;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .author-tag {
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      font-weight: bold;
+      color: #d97706;
+      text-align: right;
+      width: 100%;
+      padding-right: 15px;
+    }
+
+    .btn-celebrate {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
       color: white;
       border: none;
-      padding: 12px 24px;
+      padding: 12px 28px;
       border-radius: 50px;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.3);
+      box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
       transition: all 0.3s ease;
-      width: 100%;
+      margin-top: 10px;
     }
 
-    .btn-action:hover {
-      transform: scale(1.05);
+    .btn-celebrate:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(217, 119, 6, 0.5);
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.06); }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+    @media (max-width: 640px) {
+      .card-container {
+        flex-direction: column;
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .card-page-left {
+        border-right: none;
+        border-bottom: 2px dashed #fde68a;
+      }
+      .card-wishes {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hiệu ứng hạt tim bay -->
+  <!-- Hạt hoa & tim hiệu ứng background -->
   <div id="particles"></div>
 
-  <!-- Thiệp 3D -->
-  <div class="card-wrapper" onclick="toggleCard()">
-    <!-- Mặt Ngoài -->
-    <div class="card-front">
-      <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80" alt="Hoa hồng 3D" class="flower-img">
-      <h2>Gửi Mẹ Yêu Thương!</h2>
-      <p>20 / 10 / 2026</p>
-      <div class="click-hint">✨ Chạm nhẹ để mở thiệp ✨</div>
+  <!-- Bố cục Thiệp 3D Tri Ân -->
+  <div class="card-container">
+    <!-- Trang Trái: Hình ảnh Mẹ và con -->
+    <div class="card-page-left">
+      <div class="img-frame">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" alt="Mẹ yêu thương">
+      </div>
+      <div class="card-title">Mẹ Cho Con Tình Yêu Bao La 🌻</div>
+      <p style="font-size: 13px; color: #92400e;">Ngày Phụ Nữ Việt Nam 20/10/2026</p>
     </div>
 
-    <!-- Mặt Trong -->
-    <div class="card-inside">
-      <div class="date-badge">20 OCTOBER 2026</div>
-      
-      <div class="message-body">
-        🌸 <b>Mẹ kính yêu!</b><br><br>
-        Nhân ngày Phụ nữ Việt Nam 20/10, con chúc Mẹ luôn tràn đầy sức khỏe, bình an và mãi nở nụ cười rạng rỡ trên môi.<br><br>
-        Cảm ơn Mẹ vì tất cả những hy sinh và tình yêu thương vô bờ bến dành cho con! 💕
+    <!-- Trang Phải: Hình ảnh Cô giáo & Lời chúc & Tên Tác Giả -->
+    <div class="card-page-right">
+      <div class="img-frame">
+        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" alt="Cô giáo kính yêu">
       </div>
 
-      <button class="btn-action" onclick="surprise(event)">Bấm để nhận quà Mẹ nhé! 🎁</button>
+      <div class="card-wishes">
+        "Kính gửi Mẹ và Cô giáo kính yêu!<br>
+        Nhân ngày Phụ nữ Việt Nam 20/10, con xin gửi tới hai người phụ nữ tuyệt nhất cuộc đời con lời tri ân sâu sắc nhất. Mẹ trao cho con tình yêu thương bao la, Cô chắp cánh trí thức dìu dắt con nên người. Chúc Mẹ và Cô luôn mạnh khỏe, hạnh phúc và tràn đầy niềm vui!"
+      </div>
+
+      <div class="author-tag">
+        Sản phẩm: Phạm Quang Vinh
+      </div>
+
+      <button class="btn-celebrate" onclick="burstConfetti()">Gửi Lời Tri Ân Lấp Lánh ✨</button>
     </div>
   </div>
 
   <script>
-    // Mở / Đóng thiệp 3D
-    function toggleCard() {
-      const card = document.querySelector('.card-wrapper');
-      card.classList.toggle('open');
-    }
-
-    // Hiệu ứng pháo hoa bắn tungシュー
-    function surprise(e) {
-      e.stopPropagation(); // Không đóng thiệp khi bấm nút
-      
-      // Bắn pháo hoa tim lấp lấp
+    // Hiệu ứng pháo hoa pháo tim lấp lánh khi bấm nút
+    function burstConfetti() {
       confetti({
-        particleCount: 100,
-        spread: 70,
+        particleCount: 120,
+        spread: 80,
         origin: { y: 0.6 },
-        colors: ['#f43f5e', '#fb7185', '#ffe4e6', '#e11d48']
+        colors: ['#f59e0b', '#d97706', '#f43f5e', '#fb7185', '#fef3c7']
       });
 
-      alert("❤️ Con chúc Mẹ ngày 20/10 thật nhiều niềm vui và luôn là người phụ nữ hạnh phúc nhất thế giới!");
+      alert("✨ Phạm Quang Vinh chúc Mẹ và Cô giáo luôn tràn ngập hạnh phúc và niềm vui trong ngày 20/10!");
     }
 
-    // Tạo các hạt hoa & tim bay background
+    // Tạo các hạt hoa hướng dương, hoa hồng & tim bay background
     function createParticle() {
       const p = document.createElement('div');
       p.classList.add('particle');
-      p.innerHTML = ['🌸', '🌹', '💖', '✨', '💐'][Math.floor(Math.random() * 5)];
+      p.innerHTML = ['🌻', '🌹', '💖', '✨', '💐', '🌸'][Math.floor(Math.random() * 6)];
       p.style.left = Math.random() * 100 + 'vw';
-      p.style.fontSize = Math.random() * 15 + 15 + 'px';
+      p.style.fontSize = Math.random() * 16 + 14 + 'px';
       p.style.animationDuration = Math.random() * 3 + 4 + 's';
 
       document.getElementById('particles').appendChild(p);
